@@ -11,8 +11,8 @@ request(filePath, (error, response, body) => {
     console.log(`Error ${response.statusCode}, please check again!`);
     return;
   }
-  if (!filePath.includes('.html')) {
-    console.log(`${filePath} is an invalid file path. Please check again.`);
+  if (!writeToLocation.includes('.html')) {
+    console.log(`${writeToLocation} is an invalid file path. Please check again.`);
     return;
   }
   fs.writeFile(writeToLocation, body, (error, stats) => {
