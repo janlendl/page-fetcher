@@ -1,14 +1,21 @@
 const request = require('request');
 const fs = require('fs');
 
-
 const requestURL = process.argv.slice(2);
-request(requestURL[0], (error, response, body) => {
-  fs.writeFile(requestURL[1], body, (error, stats) => {
+const filePath = requestURL[0];
+const writeToLocation = requestURL[1];
+
+
+request(filePath, (error, response, body) => {
+  if(error || response.statusCode !== 200) {
+    console.log(`Error ${response.statusCode}, please check again!`);
+    return;
+  }
+  fs.writeFile(writeToLocation, body, (error, stats) => {
     if (!error) {
-        console.log(`Downloaded and saved ${body.length} bytes to ${requestURL[1]}`);
+      console.log(`Downloaded and saved ${response.headers['content-length']} bytes to ${writeToLocation}`);
     }
-  });
+  }); 
 });
 
 
